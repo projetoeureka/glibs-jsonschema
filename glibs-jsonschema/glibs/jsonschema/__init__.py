@@ -5,7 +5,7 @@ import functools
 class SchemaValidationError(Exception):
 
     def __init__(self, errors):
-        super(ValidationError, self).__init__("Error validating the schema")
+        super(SchemaValidationError, self).__init__("Error validating the schema")
         self.errors = errors
 
 
@@ -14,7 +14,10 @@ def validate_schema(json, schema):
     validator = jsonschema.Draft4Validator(schema)
 
     for error in sorted(validator.iter_errors(json), key=str):
-        errors[error.path[0]] = error.message
+        if error.path:
+            errors[error.path[0]] = error.message
+        else:
+            errors["root"] = "{}{};".format(errors.get("root", ""), error.message)
 
     if errors:
         raise SchemaValidationError(errors)
