@@ -2,7 +2,7 @@ import setuptools
 
 
 setuptools.setup(
-    name="geekie-jsonschema",
+    name="glibs-jsonschema",
     version="1.0",
     url="http://www.geekie.com.br",
     maintainer="Geekie",
